@@ -5,7 +5,7 @@ const CartWidget = () => {
     <div>
       <Flex>
       <Badge colorScheme='red'>5</Badge>
-      <img src="src/assets/bolso.png" alt="bolso de compra" width='25px' height='25px' mr='10px'/>
+      <img src="src/assets/img/bolso.png" alt="bolso de compra" width='25px' height='25px' mr='10px'/>
       </Flex>
       
       </div>

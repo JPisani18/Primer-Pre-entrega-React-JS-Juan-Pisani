@@ -4,13 +4,11 @@ import CartWidget from "../CartWidget/CartWidget";
 import { NavLink } from "react-router-dom";
 import { useCart } from '../Carrito/CarritoContext';
 
-const NavBar = ({ onSelectCategory }) => {
+const NavBar = () => {
   const { cart } = useCart();
   const cantidadEnCarrito = cart.reduce((total, item) => total + item.cantidad, 0);
 
-  const handleCategorySelect = (categoryid) => {
-    onSelectCategory(categoryid);
-  };
+  
 
   return (
     <div>
@@ -30,17 +28,17 @@ const NavBar = ({ onSelectCategory }) => {
             </MenuButton>
             <MenuList>
               <MenuItem>
-                <NavLink to="/categorias/Remeras" onClick={() => handleCategorySelect('Remeras')}>
+                <NavLink to="/categorias/Remeras" onClick={() => ('Remeras')}>
                   Remeras
                 </NavLink>
               </MenuItem>
               <MenuItem>
-                <NavLink to="/categorias/Camperas" onClick={() => handleCategorySelect('Camperas')}>
+                <NavLink to="/categorias/Camperas" onClick={() => ('Camperas')}>
                   Camperas
                 </NavLink>
               </MenuItem>
               <MenuItem>
-                <NavLink to="/categorias/Pantalones" onClick={() => handleCategorySelect('Pantalones')}>
+                <NavLink to="/categorias/Pantalones" onClick={() => ('Pantalones')}>
                   Pantalones
                 </NavLink>
               </MenuItem>

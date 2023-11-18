@@ -1,24 +1,24 @@
 import React from 'react';
 import { Flex, Box, Heading, Spacer, Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
 import CartWidget from "../CartWidget/CartWidget";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useCart } from '../Carrito/CarritoContext';
 
 const NavBar = ({ onSelectCategory }) => {
-  const handleCategorySelect = (categoria) => {
-    onSelectCategory(categoria);
-  };
-
   const { cart } = useCart();
   const cantidadEnCarrito = cart.reduce((total, item) => total + item.cantidad, 0);
+
+  const handleCategorySelect = (categoryid) => {
+    onSelectCategory(categoryid);
+  };
 
   return (
     <div>
       <Flex minHeight='15vh' alignItems='center' gap='2'>
         <Box p='2'>
-          <Link to="/">
+          <NavLink to="/" >
             <Heading size='md'>Mi Tienda</Heading>
-          </Link>
+          </NavLink>
         </Box>
 
         <Spacer />
@@ -30,19 +30,19 @@ const NavBar = ({ onSelectCategory }) => {
             </MenuButton>
             <MenuList>
               <MenuItem>
-                <Link to="/categorias/Remeras" onClick={() => handleCategorySelect('Remeras')}>
+                <NavLink to="/categorias/Remeras" onClick={() => handleCategorySelect('Remeras')}>
                   Remeras
-                </Link>
+                </NavLink>
               </MenuItem>
               <MenuItem>
-                <Link to="/categorias/Camperas" onClick={() => handleCategorySelect('Camperas')}>
+                <NavLink to="/categorias/Camperas" onClick={() => handleCategorySelect('Camperas')}>
                   Camperas
-                </Link>
+                </NavLink>
               </MenuItem>
               <MenuItem>
-                <Link to="/categorias/Pantalones" onClick={() => handleCategorySelect('Pantalones')}>
+                <NavLink to="/categorias/Pantalones" onClick={() => handleCategorySelect('Pantalones')}>
                   Pantalones
-                </Link>
+                </NavLink>
               </MenuItem>
             </MenuList>
           </Menu>
@@ -51,9 +51,9 @@ const NavBar = ({ onSelectCategory }) => {
         <Spacer />
 
         <Box p='2'>
-         <Link to="/carrito">
-         <CartWidget cantidadEnCarrito={cantidadEnCarrito} />
-         </Link>
+          <NavLink to="/carrito">
+            <CartWidget cantidadEnCarrito={cantidadEnCarrito} />
+          </NavLink>
         </Box>
       </Flex>
     </div>

@@ -1,31 +1,15 @@
-
-
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import ItemList from './ItemList';
-import ProductListLoader from '../itemlistcontainer/ProductListLoader.jsx';
+import { useParams } from 'react-router-dom';
 
-const ItemListContainer = ({ onSelectCategory, selectedCategory }) => {
+const ItemListContainer = ({ onSelectCategory }) => {
   const [productos, setProductos] = useState([]);
-
-  
-  const productosFiltrados = useMemo(() => {
-    return selectedCategory
-      ? productos.filter((producto) => producto.categoria === selectedCategory)
-      : productos;
-  }, [productos, selectedCategory]);
-
- 
-  const handleSelectCategory = useCallback(
-    (categoria) => {
-      onSelectCategory(categoria);
-    },
-    [onSelectCategory]
-  );
+  const { categoryid } = useParams();
 
   useEffect(() => {
     const cargarProductos = async () => {
       try {
-        const response = await fetch('src/productos.json');
+        const response = await fetch('/src/productos.json');
         const data = await response.json();
         setProductos(data);
       } catch (error) {
@@ -36,12 +20,21 @@ const ItemListContainer = ({ onSelectCategory, selectedCategory }) => {
     cargarProductos();
   }, []);
 
+  useEffect(() => {
+    if (categoryid) {
+      if (typeof onSelectCategory === 'function') {
+        onSelectCategory(categoryid);
+      }
+    }
+  }, [categoryid, onSelectCategory]);
+
+  const productosFiltrados = categoryid
+    ? productos.filter((producto) => producto.categoria === categoryid)
+    : productos;
+
   return (
     <div>
-      <ProductListLoader
-        productos={productosFiltrados}
-        onSelectCategory={handleSelectCategory}
-      />
+      <ItemList productos={productosFiltrados} />
     </div>
   );
 };

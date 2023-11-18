@@ -28,17 +28,17 @@ const NavBar = () => {
             </MenuButton>
             <MenuList>
               <MenuItem>
-                <NavLink to="/categorias/Remeras" onClick={() => ('Remeras')}>
+                <NavLink to="/category/Remeras" onClick={() => ('Remeras')}>
                   Remeras
                 </NavLink>
               </MenuItem>
               <MenuItem>
-                <NavLink to="/categorias/Camperas" onClick={() => ('Camperas')}>
+                <NavLink to="/category/Camperas" onClick={() => ('Camperas')}>
                   Camperas
                 </NavLink>
               </MenuItem>
               <MenuItem>
-                <NavLink to="/categorias/Pantalones" onClick={() => ('Pantalones')}>
+                <NavLink to="/category/Pantalones" onClick={() => ('Pantalones')}>
                   Pantalones
                 </NavLink>
               </MenuItem>

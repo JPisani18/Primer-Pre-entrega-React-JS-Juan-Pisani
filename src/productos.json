@@ -1,0 +1,93 @@
+[
+    {
+      "id": 1,
+      "titulo": "Remera Oversize",
+      "talle": "XL",
+      "precio": 5800,
+      "imageSrc": "public/img/REMERA-OVERSIZE.webp",
+      "categoria": "Remeras"
+    },
+    {
+      "id": 2,
+      "titulo": "Remera Regular",
+      "talle": "L",
+      "precio": 5500,
+      "imageSrc": "public/img/REMERA-REGULAR.webp",
+      "categoria": "Remeras"
+    },
+    {
+      "id": 3,
+      "titulo": "Remera Oversize",
+      "talle": "L",
+      "precio": 4800,
+      "imageSrc": "public/img/Remeras-oversize-55465.webp",
+      "categoria": "Remeras"
+    },
+    {
+      "id": 4,
+      "titulo": "Pantalón Cargo",
+      "talle": "40",
+      "precio": 14000,
+      "imageSrc": "public/img/pantalon-cargo.webp",
+      "categoria": "Pantalones"
+    },
+    {
+      "id": 5,
+      "titulo": "Pantalón Jogging",
+      "talle": "42",
+      "precio": 12500,
+      "imageSrc": "public/img/pantalón-joggin.webp",
+      "categoria": "Pantalones"
+    },
+    {
+      "id": 6,
+      "titulo": "Pantalón Corto",
+      "talle": "40",
+      "precio": 8000,
+      "imageSrc": "public/img/pantalón-corto.webp",
+      "categoria": "Pantalones"
+    },
+    {
+      "id": 7,
+      "titulo": "Pantalón Cargo",
+      "talle": "42",
+      "precio": 12500,
+      "imageSrc": "public/img/Pantalones-urbano-Cargo-negro-75110.webp",
+      "categoria": "Pantalones"
+    },
+    {
+      "id": 8,
+      "titulo": "Pantalón Jogging",
+      "talle": "40",
+      "precio": 8000,
+      "imageSrc": "public/img/Pantalones-urbano-Jogging-54692.webp",
+      "categoria": "Pantalones"
+    },
+    {
+        "id": 9,
+        "titulo": "Remera Oversize",
+        "talle": "L",
+        "precio": 8000,
+        "imageSrc": "public/img/Remeras-oversize-negra-70721.webp",
+        "categoria": "Remeras"
+    },
+    {
+        "id": 10,
+        "titulo": "Pantalón Corto Cargo",
+        "talle": "40",
+        "precio": 8000,
+        "imageSrc": "public/img/Pantalones-corto-cargo-54950.webp",
+        "categoria": "Pantalones"
+    },
+    {
+        "id": 11,
+        "titulo": "Campera",
+        "talle": "L",
+        "precio": 8000,
+        "imageSrc": "public/img/campera-hombre-jogging-negro-55465.webp",
+        "categoria": "Camperas"
+    }
+
+      
+  ]
+  

@@ -1,0 +1,5 @@
+.navbar-container {
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.194);
+    width: 100%;
+  }

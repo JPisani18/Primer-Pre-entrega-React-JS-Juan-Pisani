@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useCart } from '../Carrito/CarritoContext';
 import { VStack, Box, Text, Input, Button } from '@chakra-ui/react';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import app from '../firebase/firebase';
 
 const Checkout = () => {
   const { cart, dispatch } = useCart();
@@ -10,7 +11,7 @@ const Checkout = () => {
   const [telefono, setTelefono] = useState('');
   const [email, setEmail] = useState('');
 
-  const db = getFirestore(app); // Asegúrate de tener la instancia correcta de Firebase
+  const db = getFirestore(app); 
 
   const handleRealizarCompra = async () => {
     const orderData = {

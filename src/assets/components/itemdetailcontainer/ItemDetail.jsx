@@ -5,7 +5,7 @@ import { Box, Card, CardBody, Image, Stack, Heading, Text, Divider, CardFooter, 
 import { useCart } from '../Carrito/CarritoContext.jsx';
 import app from '../firebase/firebase.js';
 
-const ItemDetail = () => {
+const ItemDetail = ({ producto: itemProducto }) => {
   const { id } = useParams();
   const [producto, setProducto] = useState(null);
   const [cantidad, setCantidad] = useState(1);
@@ -25,7 +25,10 @@ const ItemDetail = () => {
           if (productoSnap.exists()) {
             const productoData = {
               id: productoSnap.id,
-              ...productoSnap.data(),
+              titulo: productoSnap.data().Nombre,
+              imageSrc: productoSnap.data().Imagen,
+              descripcion: productoSnap.data().Talle,
+              precio: productoSnap.data().Precio,
             };
 
             console.log('Producto encontrado:', productoData);
@@ -47,11 +50,10 @@ const ItemDetail = () => {
 
   console.log('Before rendering');
 
- 
   const manejarAgregarAlCarrito = () => {
-    if (producto) {
-      dispatch({ type: 'ADD_TO_CART', payload: { ...producto, cantidad } });
-      console.log('Producto agregado al carrito:', { ...producto, cantidad });
+    if (itemProducto) {
+      dispatch({ type: 'ADD_TO_CART', payload: { ...itemProducto, cantidad } });
+      console.log('Producto agregado al carrito:', { ...itemProducto, cantidad });
     }
   };
 
@@ -65,7 +67,7 @@ const ItemDetail = () => {
     }
   };
 
-  if (!producto) {
+  if (!itemProducto) {
     return <p>No se encontró el producto con ID: {id}</p>;
   }
 
@@ -73,12 +75,12 @@ const ItemDetail = () => {
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="calc(100vh - 60px)">
       <Card maxW='sm'>
         <CardBody>
-          <Image src={producto.Imagen} alt={producto.Nombre} borderRadius='lg' />
+          <Image className='detailImg' src={itemProducto.imageSrc} alt={itemProducto.titulo} borderRadius='lg' maxW='200px' maxH='300px' mx="auto" />
           <Stack mt='6' spacing='3'>
-            <Heading size='md'>{producto.Nombre}</Heading>
-            <Text>{producto.Talle}</Text>
+            <Heading size='md'>{itemProducto.titulo}</Heading>
+            <Text>{itemProducto.descripcion}</Text>
             <Text color='blue.600' fontSize='2xl'>
-              ${producto.Precio}
+              ${itemProducto.precio}
             </Text>
           </Stack>
         </CardBody>
@@ -100,7 +102,6 @@ const ItemDetail = () => {
       </Card>
     </Box>
   );
-  console.log('After rendering');
 };
 
 export default ItemDetail;

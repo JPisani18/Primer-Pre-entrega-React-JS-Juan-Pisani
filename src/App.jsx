@@ -9,6 +9,7 @@ import Carrito from './assets/components/Carrito/Carrito.jsx';
 import Checkout from './assets/components/Checkout/Checkout.jsx'; 
 import './App.css';
 
+
 const App = () => {
   return (
     <CarritoProvider>
@@ -20,12 +21,13 @@ const App = () => {
             <Route path='/item/:itemId' element={<ItemDetailsContainer />} />
             <Route path='/carrito' element={<Carrito />} />
             <Route path='/checkout' element={<Checkout />} /> 
-            <Route path="/category/:categoryid" element={<ItemListContainer />} />
+            <Route path="/category/:categoryId" element={<ItemListContainer />} />
           </Routes>
         </BrowserRouter>
       </div>
     </CarritoProvider>
   );
 }
+
 
 export default App;

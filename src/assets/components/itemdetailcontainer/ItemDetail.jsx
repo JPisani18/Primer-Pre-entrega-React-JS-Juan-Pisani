@@ -1,66 +1,95 @@
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { Box, Card, CardBody, Image, Stack, Heading, Text, Divider, CardFooter, ButtonGroup, Button } from '@chakra-ui/react';
+import { useCart } from '../Carrito/CarritoContext.jsx';
+import app from '../firebase/firebase.js';
 
-import React, { useState } from 'react';
-import { Box, Card, CardBody, Divider, CardFooter, ButtonGroup, Button, Image, Stack, Heading, Text } from '@chakra-ui/react';
-import { useCart } from "../Carrito/CarritoContext.jsx";
-import Swal from 'sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
-
-
-const ItemDetail = ({ producto }) => {
+const ItemDetail = () => {
+  const { id } = useParams();
+  const [producto, setProducto] = useState(null);
   const [cantidad, setCantidad] = useState(1);
   const { dispatch } = useCart();
 
-  const incrementarCantidad = () => {
-    setCantidad(cantidad + 1);
-  };
+  useEffect(() => {
+    const fetchProducto = async () => {
+      if (id) {
+        const db = getFirestore(app);
+        const productoRef = doc(db, 'Productos', id);
 
-  const decrementarCantidad = () => {
-    if (cantidad > 1) {
-      setCantidad(cantidad - 1);
+        try {
+          console.log('Before getting snapshot');
+          const productoSnap = await getDoc(productoRef);
+          console.log('After getting snapshot');
+
+          if (productoSnap.exists()) {
+            const productoData = {
+              id: productoSnap.id,
+              ...productoSnap.data(),
+            };
+
+            console.log('Producto encontrado:', productoData);
+            setProducto(productoData);
+          } else {
+            console.log('No se encontró el producto con ID:', id);
+          }
+        } catch (error) {
+          console.error('Error al obtener el producto:', error);
+          console.log('Error details:', error.details);
+        }
+      }
+    };
+
+    console.log('Before fetchProducto');
+    fetchProducto();
+    console.log('After fetchProducto');
+  }, [id]);
+
+  console.log('Before rendering');
+
+ 
+  const manejarAgregarAlCarrito = () => {
+    if (producto) {
+      dispatch({ type: 'ADD_TO_CART', payload: { ...producto, cantidad } });
+      console.log('Producto agregado al carrito:', { ...producto, cantidad });
     }
   };
 
-  const manejarAgregarAlCarrito = () => {
-    dispatch({
-      type: 'ADD_TO_CART',
-      payload: {
-        id: producto.id,
-        titulo: producto.titulo,
-        precio: producto.precio,
-        cantidad: cantidad,
-      },
-    });
-
-    setCantidad(1);
-    Swal.fire({
-      icon: 'success',
-      title: 'Producto agregado al carrito',
-      showConfirmButton: false,
-      timer: 1500,
-    });
+  const manejarIncrementarCantidad = () => {
+    setCantidad((prevCantidad) => prevCantidad + 1);
   };
 
+  const manejarDecrementarCantidad = () => {
+    if (cantidad > 1) {
+      setCantidad((prevCantidad) => prevCantidad - 1);
+    }
+  };
+
+  if (!producto) {
+    return <p>No se encontró el producto con ID: {id}</p>;
+  }
+
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" minHeight="calc(100vh - 60px)"> {/* Resta la altura del NavBar para mantener el componente centrado */}
+    <Box display="flex" justifyContent="center" alignItems="center" minHeight="calc(100vh - 60px)">
       <Card maxW='sm'>
         <CardBody>
-          <Image src={import.meta.env.BASE_URL + producto.imageSrc} alt={producto.titulo} borderRadius='lg' />
+          <Image src={producto.Imagen} alt={producto.Nombre} borderRadius='lg' />
           <Stack mt='6' spacing='3'>
-            <Heading size='md'>{producto.titulo}</Heading>
-            <Text>{producto.descripcion}</Text>
+            <Heading size='md'>{producto.Nombre}</Heading>
+            <Text>{producto.Talle}</Text>
             <Text color='blue.600' fontSize='2xl'>
-              ${producto.precio}
+              ${producto.Precio}
             </Text>
           </Stack>
         </CardBody>
         <Divider />
         <CardFooter>
           <ButtonGroup spacing='2'>
-            <Button variant='solid' colorScheme='blue' onClick={decrementarCantidad}>
+            <Button variant='solid' colorScheme='blue' onClick={manejarDecrementarCantidad}>
               -
             </Button>
             <Text>{cantidad}</Text>
-            <Button variant='solid' colorScheme='blue' onClick={incrementarCantidad}>
+            <Button variant='solid' colorScheme='blue' onClick={manejarIncrementarCantidad}>
               +
             </Button>
           </ButtonGroup>
@@ -71,6 +100,7 @@ const ItemDetail = ({ producto }) => {
       </Card>
     </Box>
   );
+  console.log('After rendering');
 };
 
 export default ItemDetail;

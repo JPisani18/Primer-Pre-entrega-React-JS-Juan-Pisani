@@ -1,10 +1,10 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Item from './Item';
 import './ItemList.css';
 
 const ItemList = ({ productos }) => {
+  console.log('Productos en ItemList:', productos);
   return (
     <div className="item-list-container">
       {productos.map((producto) => (

@@ -3,12 +3,10 @@ import { Flex, Box, Heading, Spacer, Menu, MenuButton, MenuList, MenuItem, Butto
 import CartWidget from "../CartWidget/CartWidget";
 import { NavLink } from "react-router-dom";
 import { useCart } from '../Carrito/CarritoContext';
-
+import '../NavBar/NavBar.css'
 const NavBar = () => {
   const { cart } = useCart();
   const cantidadEnCarrito = cart.reduce((total, item) => total + item.cantidad, 0);
-
-  
 
   return (
     <div>
@@ -28,17 +26,17 @@ const NavBar = () => {
             </MenuButton>
             <MenuList>
               <MenuItem>
-                <NavLink to="/category/Remeras" onClick={() => ('Remeras')}>
+                <NavLink to="/category/remeras">
                   Remeras
                 </NavLink>
               </MenuItem>
               <MenuItem>
-                <NavLink to="/category/Camperas" onClick={() => ('Camperas')}>
+                <NavLink to="/category/camperas">
                   Camperas
                 </NavLink>
               </MenuItem>
               <MenuItem>
-                <NavLink to="/category/Pantalones" onClick={() => ('Pantalones')}>
+                <NavLink to="/category/pantalones">
                   Pantalones
                 </NavLink>
               </MenuItem>

@@ -1,10 +1,13 @@
-// Carrito.jsx
-import React from 'react';
-import { useCart } from './CarritoContext';
+import React, { useContext } from 'react';
 import { VStack, Box, Text, Button } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { CarritoContext } from '../Carrito/CarritoContext';
+import { useCart } from '../Carrito/CarritoContext'; 
 
 const Carrito = () => {
   const { cart, dispatch } = useCart();
+  const navigate = useNavigate();
+  const { handleCheckout } = useContext(CarritoContext);
 
   const handleRemoveFromCart = (itemId) => {
     dispatch({
@@ -19,17 +22,40 @@ const Carrito = () => {
     }, 0);
   };
 
+  const handleFinalizarCompra = () => {
+    if (cart.length === 0) {
+      alert('El carrito está vacío. Agrega productos antes de proceder al pago.');
+      return;
+    }
+
+    const db = firebase.firestore();
+    const orderData = {
+      items: cart,
+      fecha: new Date(),
+      estado: 'generada',
+    };
+
+    try {
+      db.collection('orders')
+        .add(orderData)
+        .then((docRef) => {
+          alert(`Orden creada con éxito. ID de orden: ${docRef.id}`);
+          navigate('/checkout');
+        })
+        .catch((error) => {
+          console.error('Error al guardar la orden en la base de datos:', error);
+        });
+    } catch (error) {
+      console.error('Error al guardar la orden en la base de datos:', error);
+    }
+  };
+
   return (
     <VStack spacing={4} align="stretch">
       <h2>Carrito de compras</h2>
       {cart.map((item) => (
-        <Box
-          key={item.id}
-          borderWidth="1px"
-          borderRadius="lg"
-          overflow="hidden"
-          p={4}
-        >
+        <Box key={item.id} borderWidth="1px" borderRadius="lg" overflow="hidden" p={4}>
+          <img src={item.imageSrc} alt={item.titulo} />
           <Text fontSize="xl">{item.titulo}</Text>
           <Text>Cantidad: {item.cantidad}</Text>
           <Text>Precio: ${item.precio * item.cantidad}</Text>
@@ -42,6 +68,7 @@ const Carrito = () => {
         <Text fontSize="xl" fontWeight="bold" mt={4}>
           Valor total: ${calculateTotal()}
         </Text>
+        <Button onClick={handleFinalizarCompra}>Finalizar Compra</Button>
       </Box>
     </VStack>
   );

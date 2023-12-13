@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useReducer } from 'react';
 
 const CarritoContext = createContext();
@@ -9,12 +8,22 @@ const cartReducer = (state, action) => {
       return [...state, action.payload];
     case 'REMOVE_FROM_CART':
       return state.filter((item) => item.id !== action.payload.id);
+    case 'CLEAR_CART':
+      return [];
     default:
       return state;
   }
 };
 
-export const CarritoProvider = ({ children }) => {
+const useCart = () => {
+  const context = useContext(CarritoContext);
+  if (!context) {
+    throw new Error('useCart debe estar dentro de un proveedor del contexto de Carrito');
+  }
+  return context;
+};
+
+const CarritoProvider = ({ children }) => {
   const [cart, dispatch] = useReducer(cartReducer, []);
 
   return (
@@ -24,10 +33,4 @@ export const CarritoProvider = ({ children }) => {
   );
 };
 
-export const useCart = () => {
-  const context = useContext(CarritoContext);
-  if (!context) {
-    throw new Error('useCart debe usarse dentro de un CarritoProvider');
-  }
-  return context;
-};
+export { CarritoContext, useCart, CarritoProvider };

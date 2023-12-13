@@ -5,11 +5,14 @@ import { Card, CardBody, CardFooter, ButtonGroup, Button, Image, Stack, Heading,
 import '../itemlistcontainer/Item.css';
 
 const Item = ({ producto }) => {
+  console.log('Producto en Item:', producto);
+
+
   return (
     <div>
       <Card maxW='sm'>
         <CardBody>
-          <Image src={producto.imageSrc} alt={producto.titulo} borderRadius='lg' />
+            <Image src={producto.imageSrc} alt={producto.titulo} borderRadius='lg' />
           <Stack mt='6' spacing='3'>
             <Heading size='md'>{producto.titulo}</Heading>
           </Stack>

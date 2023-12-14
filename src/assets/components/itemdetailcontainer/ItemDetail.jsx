@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { Box, Card, CardBody, Image, Stack, Heading, Text, Divider, CardFooter, ButtonGroup, Button } from '@chakra-ui/react';
 import { useCart } from '../Carrito/CarritoContext.jsx';
+import Swal from 'sweetalert2'; // Importa SweetAlert
 import app from '../firebase/firebase.js';
 
 const ItemDetail = ({ producto: itemProducto }) => {
@@ -54,6 +55,14 @@ const ItemDetail = ({ producto: itemProducto }) => {
     if (itemProducto) {
       dispatch({ type: 'ADD_TO_CART', payload: { ...itemProducto, cantidad } });
       console.log('Producto agregado al carrito:', { ...itemProducto, cantidad });
+
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Producto añadido al carrito',
+        showConfirmButton: false,
+        timer: 1500, 
+      });
     }
   };
 
@@ -72,8 +81,8 @@ const ItemDetail = ({ producto: itemProducto }) => {
   }
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" minHeight="calc(100vh - 60px)">
-      <Card maxW='sm'>
+    <Box display="flex" justifyContent="center" alignItems="center" minHeight="calc(100vh - 60px)" mt={5}>
+      <Card maxW='sm' className='itemdetail.container'>
         <CardBody>
           <Image className='detailImg' src={itemProducto.imageSrc} alt={itemProducto.titulo} borderRadius='lg' maxW='200px' maxH='300px' mx="auto" />
           <Stack mt='6' spacing='3'>
